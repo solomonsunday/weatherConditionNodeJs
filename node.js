@@ -5,7 +5,10 @@ const check = require('./index')
 const command = process.argv[2]
 const yargs = require('yargs')
 const square = require('./playGround')
-const weather = require('./weather')
+// so here i'm call my call back function from weather folder.
+const geocode = require('./utils/weather')
+const forecast = require('./utils/forecast')
+
 check();
 fs.writeFileSync('notes.text', 'I live in lagos State');
 console.log("Hello,How are you doing, this is just a test")
@@ -60,3 +63,23 @@ console.log(bookObject.aurthor);
 
 
 // ES6 Arrow Fuction
+
+
+// this is a callback function for location geocode and  weather forecast.
+
+geocode('Lagos', (error, data) => {
+    if (error) {
+        return console.log(error)
+    }
+    forecast(data.latitude, data.longitude, (error, forecastdata) => {
+        if (error) {
+            return console.log(error)
+        }
+
+
+        console.log(data.location)
+        console.log(forecastdata)
+    })
+})
+
+// Adding two function together is call callback Chainning.
